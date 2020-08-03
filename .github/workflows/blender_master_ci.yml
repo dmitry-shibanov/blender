@@ -1,13 +1,6 @@
 name: Build Release
 
-on:
-  push:
-    branches:
-      - master
-      - feature/github_actions
-  pull_request:
-    branches:
-      - master
+on: push
 
 jobs:
   builder:
@@ -59,6 +52,10 @@ jobs:
       - name: submodules and libraries update
         working-directory: ${{ github.workspace }}/build
         run: python ../blender.git/build_files/buildbot/worker_update.py ${{ matrix.builder }} ${{ matrix.branch }}
+
+      - name: get disk space
+        shell: pwsh
+        run: Get-PSDrive
 
       - name: compile
         working-directory: ${{ github.workspace }}/build
