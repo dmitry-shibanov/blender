@@ -45,7 +45,7 @@ jobs:
       - name: Checkout Blender ${{ matrix.branch }}
         run: |
           mkdir C:/blender
-          git clone https://github.com/dmitry-shibanov/blender.git C:/ -b v-dmshib/test-branch-ci --depth 1
+          git clone https://github.com/dmitry-shibanov/blender.git C:/blender -b v-dmshib/test-branch-ci --depth 1
 
       - name: submodules and libraries update
         working-directory: C:/blender/build
