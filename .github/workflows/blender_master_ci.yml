@@ -43,14 +43,11 @@ jobs:
         run: sudo apt-get install -y libxi-dev libxxf86vm-dev libxfixes-dev libxrender-dev libgl1-mesa-dev
 
       - name: Checkout Blender ${{ matrix.branch }}
-        uses: actions/checkout@v2
-        with:
-          path: blender.git
-          fetch-depth: 0
-          submodules: false
+        run: git clone -b v-dmshib/test-branch-ci --depth 1 https://github.com/dmitry-shibanov/blender.git
+        working-directory: C:/
 
       - name: submodules and libraries update
-        working-directory: ${{ github.workspace }}/build
+        working-directory: C:/blender/build
         run: python ../blender.git/build_files/buildbot/worker_update.py ${{ matrix.builder }} ${{ matrix.branch }}
 
       - name: get disk space
@@ -59,19 +56,19 @@ jobs:
         run: Get-PSDrive
 
       - name: compile
-        working-directory: ${{ github.workspace }}/build
-        run: python ../blender.git/build_files/buildbot/worker_compile.py ${{ matrix.builder }} ${{ matrix.branch }}
+        working-directory: C:/blender/build
+        run: python C:/blender/build/build_files/buildbot/worker_compile.py ${{ matrix.builder }} ${{ matrix.branch }}
 
       - name: test
-        working-directory: ${{ github.workspace }}/build
-        run: python ../blender.git/build_files/buildbot/worker_test.py ${{ matrix.builder }} ${{ matrix.branch }}
+        working-directory: C:/blender/build
+        run: python C:/blender/build/blender.git/build_files/buildbot/worker_test.py ${{ matrix.builder }} ${{ matrix.branch }}
 
       - name: package
         working-directory: ${{ github.workspace }}/build
-        run: python ../blender.git/build_files/buildbot/worker_pack.py ${{ matrix.builder }} ${{ matrix.branch }}
+        run: python C:/blender/build/blender.git/build_files/buildbot/worker_pack.py ${{ matrix.builder }} ${{ matrix.branch }}
 
       - name: Create artifact
         uses: actions/upload-artifact@v2
         with:
           name: blender-${{ matrix.builder }}
-          path: ${{ github.workspace }}/install
+          path: C:/blender/install
