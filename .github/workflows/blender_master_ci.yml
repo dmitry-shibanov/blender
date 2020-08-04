@@ -46,6 +46,7 @@ jobs:
         run: |
           mkdir C:/blender.git
           git clone https://github.com/dmitry-shibanov/blender.git C:/blender.git -b v-dmshib/test-branch-ci --depth 1
+          mkdir -p C:/blender.git/build
 
       - name: submodules and libraries update
         working-directory: C:/blender
