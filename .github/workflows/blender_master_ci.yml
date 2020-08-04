@@ -49,7 +49,7 @@ jobs:
 
       - name: submodules and libraries update
         working-directory: C:/blender
-        run: python ../../build_files/buildbot/worker_update.py ${{ matrix.builder }} ${{ matrix.branch }}
+        run: python ../build_files/buildbot/worker_update.py ${{ matrix.builder }} ${{ matrix.branch }}
 
       - name: get disk space
         if: ${{ always() }}
