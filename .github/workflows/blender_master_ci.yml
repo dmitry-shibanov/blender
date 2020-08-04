@@ -44,12 +44,12 @@ jobs:
 
       - name: Checkout Blender ${{ matrix.branch }}
         run: |
-          mkdir C:/blender
-          git clone https://github.com/dmitry-shibanov/blender.git C:/blender -b v-dmshib/test-branch-ci --depth 1
+          mkdir C:/blender.git
+          git clone https://github.com/dmitry-shibanov/blender.git C:/blender.git -b v-dmshib/test-branch-ci --depth 1
 
       - name: submodules and libraries update
         working-directory: C:/blender
-        run: python C:/blender/build_files/buildbot/worker_update.py ${{ matrix.builder }} ${{ matrix.branch }}
+        run: python C:/blender.git/build_files/buildbot/worker_update.py ${{ matrix.builder }} ${{ matrix.branch }}
 
       - name: get disk space
         if: ${{ always() }}
@@ -57,8 +57,8 @@ jobs:
         run: Get-PSDrive
 
       - name: compile
-        working-directory: C:/blender/build
-        run: python C:/blender/build/build_files/buildbot/worker_compile.py ${{ matrix.builder }} ${{ matrix.branch }}
+        working-directory: C:/blender.git/build
+        run: python C:/blender.git/build/build_files/buildbot/worker_compile.py ${{ matrix.builder }} ${{ matrix.branch }}
 
       - name: test
         working-directory: C:/blender/build
